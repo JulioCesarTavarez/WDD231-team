@@ -1,0 +1,41 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    background-color: #d5d0b3;
+}
+header{
+text-align: center;
+}
+.lightModeBox{
+    position: absolute;
+    left: 10px;
+    top: 6%;
+    border: #000000 solid 2px;
+    width:40px;
+    height: fit-content;
+    text-align: left;
+    background-color: aliceblue;
+}
+
+.lightModeImage{
+    width: 20px;
+}
+
+main{
+    padding: 10px;
+}
+
+.stickyNote{
+    width: 20%;
+    height: auto;
+    background-color: #d5d0b3;
+    border: #000000 solid 2px;
+    border-radius: 10px;
+    min-width: 150px;
+    padding: 10px;
+    background-color: brown;
+}
+
+h2{
+    text-align: center;
+}
