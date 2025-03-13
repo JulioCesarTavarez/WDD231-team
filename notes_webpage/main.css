@@ -1,0 +1,39 @@
+/* https://coolors.co/0091ad-6efafb-fff4e4-f7e8a4-ff57bb */
+:root {
+    --color0: #725752;
+    --color1: #878E88;
+    --color2: #96C0B7;
+    --color3: #D4DFC7;
+    --color4: #FEF6C9;
+
+}
+
+header {
+    background-color: var(--color0);
+    color: var(--color4);
+    margin: 0 auto;
+    padding: 25px;
+    display: flex;
+}
+
+body {
+    background-color: var(--color4);
+    margin: 0px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.folder-card {
+    height: 100px;
+    width: 1200px;
+    display: flex;
+    background-color: var(--color3);
+    margin: 5px;
+    padding: 10px;
+}
+.folder-icon {
+    max-height: 80px;
+}
