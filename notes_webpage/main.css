@@ -48,10 +48,12 @@ main {
     padding: 10px;
     border: 2px solid var(--color0);
     border-radius: 10px;
+    transition-duration: .5s;
 }
 
 .folder-card:hover {
     background-color: #96C0B7;
+    transition-duration: .5s;
 }
 .folder-icon {
     max-height: 50px;
