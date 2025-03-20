@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cool Notes</title>
     <link rel="stylesheet" href="main.css" />
+    <script src="main.js" defer></script>
 </head>
 <body>
+    <section class="user_box">
+        <form id="user_form">
+            <h1>Welcome!</h1>
+            <p class="user_error">No name was inserted, please try again.</p>
+            <label for="user_input">Enter your name: </label>
+            <input id="user_input" name="user_input" type="text">
+            <p>
+                <button id="user_button">Submit</button>
+            </p>
+        </form>
+    </section>
     <header>
         <div>
-            <h1>Cool Notes</h1>
+            <h2>Cool Notes</h1>
         </div>
         <div>
-            <h2>Welcome, {User}</h1>
+            <h3 id="user_welcome">Welcome</h3>
         </div>
         <div>
             <p>&copy 2025</p>
@@ -22,21 +34,21 @@
         <a href="#" class="card-link">
             <section class="folder-card">
                 <img src="open-folder.png" class="folder-icon" alt="folder icon">
-                <h3 class="folder-title">Folder Title 0</h2>
+                <h4 class="folder-title">Folder Title 0</h4>
                 <p>Last edit: 3-13-2025</p>
             </section>
         </a>
         <a href="#" class="card-link">
             <section class="folder-card">
                 <img src="open-folder.png" class="folder-icon" alt="folder icon">
-                <h3 class="folder-title">Folder Title 1</h2>
+                <h4 class="folder-title">Folder Title 1</h4>
                 <p>Last edit: 3-12-2025</p>
             </section>
         </a>
         <a href="#" class="card-link">
             <section class="folder-card">
                 <img src="open-folder.png" class="folder-icon" alt="folder icon">
-                <h3 class="folder-title">Folder Title 2</h2>
+                <h4 class="folder-title">Folder Title 2</h4>
                 <p>Last edit: 3-10-2025</p>
             </section>
         </a>

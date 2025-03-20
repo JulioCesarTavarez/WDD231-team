@@ -62,3 +62,43 @@ a {
     text-decoration: none;
     color: var(--color0);
 }
+
+.user_box {
+    max-width: 400px;
+    height: 100px;
+    background-color: var(--color3);
+    border: 2px solid var(--color0);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color0);
+    position: absolute;
+    padding: 50px;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 1s;
+    opacity: 0;
+}
+
+#user_form > h1 {
+    text-align: center;
+}
+
+#user_form > p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#user_button {
+    width: 100px;
+    height: 25px;
+}
+
+.user_error {
+    font-size: 0px;
+    color: red;
+}
