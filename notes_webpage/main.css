@@ -8,6 +8,7 @@
 
 }
 
+/* ================== Header Styles ======================*/
 header {
     background-color: var(--color0);
     color: var(--color4);
@@ -32,6 +33,7 @@ body {
     margin: 0px;
 }
 
+/* ================== Main Body Styles ======================*/
 main {
     display: flex;
     flex-direction: column;
@@ -63,6 +65,7 @@ a {
     color: var(--color0);
 }
 
+/* ================== User Form Styles ======================*/
 .user_box {
     max-width: 400px;
     height: 100px;
@@ -101,4 +104,46 @@ a {
 .user_error {
     font-size: 0px;
     color: red;
+}
+
+/* ================== Tool bar Styles ======================*/
+.add-button {
+    position: absolute;
+    bottom: 25px;
+    right: 125px;
+    background-color: var(--color1);
+    border: 2px solid var(--color0);
+    border-radius: 10px;
+    color: var(--color4);
+    width: 75px;
+    height: 75px;
+    font-size: 65px;
+    text-align: center;
+    padding-bottom: 0px;
+    padding-right: 3px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--color1);
+    border: 2px solid var(--color0);
+    border-radius: 10px;
+    color: var(--color4);
+    width: 75px;
+    height: 75px;
+    font-size: 65px;
+    text-align: center;
+    padding-bottom: 0px;
+    transition: .5s;
+    cursor: pointer; 
+}
+
+.add-button:hover, .delete-button:hover {
+    background-color: var(--color3);
+    color: var(--color0);
+    border: 2px solid var(--color2);
 }

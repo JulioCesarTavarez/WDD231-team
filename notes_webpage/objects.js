@@ -70,3 +70,60 @@ const notes = [
       note_time: "2025-03-05T21:33:17Z"
     }
   ];
+
+  export const folders = [
+    {
+      folder_name: "Intro to Programming",
+      folder_user: "Logan",
+      folder_url: "logan_0",
+      last_edited: "2025-03-21"
+    },
+    {
+      folder_name: "Algorithmic Thinking",
+      folder_user: "Logan",
+      folder_url: "logan_1",
+      last_edited: "2025-03-24"
+    },
+    {
+      folder_name: "Computer Systems",
+      folder_user: "Logan",
+      folder_url: "logan_2",
+      last_edited: "2025-03-23"
+    },
+    {
+      folder_name: "Computer Systems",
+      folder_user: "Steven",
+      folder_url: "steven_0",
+      last_edited: "2025-03-20"
+    },
+    {
+      folder_name: "Advanced Writing and Research",
+      folder_user: "Steven",
+      folder_url: "steven_1",
+      last_edited: "2025-03-22"
+    },
+    {
+      folder_name: "Technical Teamwork",
+      folder_user: "Steven",
+      folder_url: "steven_2",
+      last_edited: "2025-03-19"
+    },
+    {
+      folder_name: "Web Development Frontend 1",
+      folder_user: "Julio",
+      folder_url: "julio_0",
+      last_edited: "2025-03-22"
+    },
+    {
+      folder_name: "Programming With Classes",
+      folder_user: "Julio",
+      folder_url: "julio_1",
+      last_edited: "2025-03-24"
+    },
+    {
+      folder_name: "Networking",
+      folder_user: "Julio",
+      folder_url: "julio_2",
+      last_edited: "2025-03-22"
+    },
+  ];
