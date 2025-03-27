@@ -13,6 +13,7 @@ const folderCont = document.querySelector(".folder-cont");
 let user_folders = []
 let user_name = "User"
 let user_folder_number = 2;
+let deleteMode = false;
 
 setTimeout(() => {
     userBox.style.opacity = "1";
@@ -51,45 +52,55 @@ function addFolder() {
     cancel_folder.addEventListener("click", hideFolderForm);
     add_form.style.opacity = "1";
     add_form.style.top = "50%";
-    
-
 }
 
-function deleteFolder(event) {
+function removeFolder(event) {
+    const folderElement = event.target.closest(".folder-card");
+    if (!folderElement) return; // Ensure the target is a valid folder card element
+
+    const index = folderElement.closest("a").getAttribute("data-index");
+
+    if (index !== null) {
+        // Convert index to a number and remove the folder from the array
+        user_folders.splice(Number(index), 1);
+        displayUserFolders(user_folders); // Re-render the list
+    }
+}
+
+function deleteFolderMode(event) {
     event.preventDefault();
+    deleteMode = !deleteMode;
 
-    const folderCont = document.querySelector(".folder-cont"); // Make sure folderCont is defined
+    if (deleteMode) {
+        delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color3");
+        delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color0");
+        
+        // Add event listener for removing folders
+        folderCont.addEventListener("click", removeFolder);
+    } else {
+        delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color1");
+        delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color4");
 
-    folderCont.addEventListener("click", function(event) {
-        if (event.target.closest(".folder-card")) { // Ensure we're clicking on a folder
-            removeFolder(event.target.closest(".folder-card")); // Pass the clicked folder
-        }
-    });
-}
-
-function removeFolder(selectedFolder) {
-    const index = user_folders.findIndex(folder => folder.folder_url === selectedFolder.dataset.folderUrl);
-    
-    if (index !== -1) { // Ensure the folder exists in the array
-        user_folders.splice(index, 1); // Remove 1 item at the found index
-        displayUserFolders(user_folders); // Update the UI
+        // Remove event listener for removing folders
+        folderCont.removeEventListener("click", removeFolder);
     }
 }
 
 
 function displayUserFolders(user_folders) {
+    const folderCont = document.querySelector(".folder-cont");
     folderCont.innerHTML = ""; // Clear previous content
 
-    user_folders.forEach(folder => {
-        folderCont.insertAdjacentHTML("beforeend", `
-            <a href="notes.html?id=${folder.folder_url}" class="card-link">
-                <section class="folder-card">
+    user_folders.forEach((folder, index) => {
+        folderCont.insertAdjacentHTML("beforeend", 
+            // <a href="notes.html?id=${folder.folder_url}" class="card-link" data-index="${index}">
+                `<section class="folder-card">
                     <img src="open-folder.png" class="folder-icon" alt="folder icon">
                     <h4 class="folder-title">${folder.folder_name}</h4>
                     <p>Last edit: ${folder.last_edited}</p>
-                </section>
-            </a>
-        `);
+                </section>`
+            // </a>
+        );
     });
 }
 
@@ -118,7 +129,7 @@ function nameSubmit(event) {
 
 user_button.addEventListener("click", nameSubmit);
 add_button.addEventListener("click", addFolder);
-delete_button.addEventListener("click", deleteFolder);
+delete_button.addEventListener("click", deleteFolderMode);
 
 
 // const search = window.location.search;
