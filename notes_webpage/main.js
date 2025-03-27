@@ -9,6 +9,7 @@ const userBox = document.querySelector(".user_box");
 const add_button = document.querySelector(".add-button");
 const delete_button = document.querySelector(".delete-button");
 const add_form = document.querySelector(".new_folder");
+const folderCont = document.querySelector(".folder-cont");
 let user_folders = []
 let user_name = "User"
 let user_folder_number = 2;
@@ -41,7 +42,6 @@ function saveFolderName(event) {
     else {
         folder_error.style.fontSize = "12px"
     }
-    
 }
 
 function addFolder() {
@@ -55,18 +55,34 @@ function addFolder() {
 
 }
 
-function deleteFolder() {
+function deleteFolder(event) {
+    event.preventDefault();
 
+    const folderCont = document.querySelector(".folder-cont"); // Make sure folderCont is defined
+
+    folderCont.addEventListener("click", function(event) {
+        if (event.target.closest(".folder-card")) { // Ensure we're clicking on a folder
+            removeFolder(event.target.closest(".folder-card")); // Pass the clicked folder
+        }
+    });
+}
+
+function removeFolder(selectedFolder) {
+    const index = user_folders.findIndex(folder => folder.folder_url === selectedFolder.dataset.folderUrl);
+    
+    if (index !== -1) { // Ensure the folder exists in the array
+        user_folders.splice(index, 1); // Remove 1 item at the found index
+        displayUserFolders(user_folders); // Update the UI
+    }
 }
 
 
 function displayUserFolders(user_folders) {
-    const folderCont = document.querySelector(".folder-cont");
     folderCont.innerHTML = ""; // Clear previous content
 
     user_folders.forEach(folder => {
         folderCont.insertAdjacentHTML("beforeend", `
-            <a href="notes.html?id=${folder.folder_id}" class="card-link">
+            <a href="notes.html?id=${folder.folder_url}" class="card-link">
                 <section class="folder-card">
                     <img src="open-folder.png" class="folder-icon" alt="folder icon">
                     <h4 class="folder-title">${folder.folder_name}</h4>
