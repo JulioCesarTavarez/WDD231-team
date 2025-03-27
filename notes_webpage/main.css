@@ -10,16 +10,20 @@
 
 /* ================== Header Styles ======================*/
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; /* Ensures it spans the full width */
     background-color: var(--color0);
     color: var(--color4);
-    margin: 0 auto;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    z-index: 1000;
+    height: 50px;
 }
+
 header > div {
     width: 200px;
 }
@@ -31,6 +35,10 @@ header p {
 body {
     background-color: var(--color4);
     margin: 0px;
+}
+
+.under-header {
+    height: 100px;
 }
 
 /* ================== Main Body Styles ======================*/
@@ -102,6 +110,48 @@ a {
 }
 
 .user_error {
+    font-size: 0px;
+    color: red;
+}
+
+/* ================================ New Folder Form Styles ========================= */
+.new_folder {
+    max-width: 400px;
+    height: 100px;
+    background-color: var(--color3);
+    border: 2px solid var(--color0);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color0);
+    position: absolute;
+    padding: 50px;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 1s;
+    opacity: 0;
+}
+
+#new_folder_form > h1 {
+    text-align: center;
+}
+
+#new_folder_form > p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#folder_add_button, #folder_cancel_button {
+    width: 100px;
+    height: 25px;
+    margin: 5px;
+}
+
+.folder_error {
     font-size: 0px;
     color: red;
 }
