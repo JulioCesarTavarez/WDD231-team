@@ -5,28 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes</title>
     <link rel="stylesheet" href="notes.css">
+    <script type="module" src="notes.js" defer></script>
 </head>
 <body>
     <header>
-        <section id="lightMode" class="lightModeBox">
-            <img src="../icons/sun.png" alt="moon/sun" class="lightModeImage" id="lightModeImage">
-        </section>
-        <h1>Notes</h1>
+        <div>
+            <h2>Cool Notes</h1>
+        </div>
+        <div>
+            <h3 id="user_welcome">Class:</h3>
+        </div>
+        <div>
+            <p>&copy 2025</p>
+        </div>
     </header>
 
     <main>
         <div class="stickyNote">
             <h2 class="stickyTitle">Note title 1</h2>
             <p class="stickyText">Lorem ipsum dolor</p>
-            <button id="readMore1" class="readMore1">Read More</button>
+            <button id="readMore1" class="readMore1">Open Ntes</button>
         </div>
 
     </main>
     <footer>
         <div>
-            <button id="addNote" class="addNote">
+            <button id="add-button" class="add-button">
                 +
-            </button>
+            </section>
+            <button class="delete-button">
+                X
+            </section>
         </div>
         <!-- <a href="https://www.flaticon.com/free-icons/sunset" title="sunset icons">Sunset icons created by Ciamis Interior design - Flaticon</a> -->
     </footer>

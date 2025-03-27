@@ -1,0 +1,22 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; /* Ensures it spans the full width */
+    background-color: var(--color0);
+    color: var(--color4);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    height: 50px;
+}
+
+header > div {
+    width: 200px;
+}
+
+header p {
+    text-align: right;
+}
