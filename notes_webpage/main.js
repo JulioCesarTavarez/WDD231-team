@@ -58,12 +58,17 @@ function removeFolder(event) {
     const folderElement = event.target.closest(".folder-card");
     if (!folderElement) return; // Ensure the target is a valid folder card element
 
-    const index = folderElement.closest("a").getAttribute("data-index");
+    const section = folderElement.closest("section");
+    if (!section) return; // Ensure we're in the correct structure
 
-    if (index !== null) {
-        // Convert index to a number and remove the folder from the array
-        user_folders.splice(Number(index), 1);
-        displayUserFolders(user_folders); // Re-render the list
+    const index = Number(section.getAttribute("data-index"));
+
+    if (!isNaN(index) && index >= 0 && index < user_folders.length) {
+        // Remove the folder from the array
+        user_folders.splice(index, 1);
+
+        // Re-render the list and ensure data-index updates correctly
+        displayUserFolders(user_folders);
     }
 }
 
@@ -77,12 +82,14 @@ function deleteFolderMode(event) {
         
         // Add event listener for removing folders
         folderCont.addEventListener("click", removeFolder);
+        folderCont.removeEventListener("click", newPage);
     } else {
         delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color1");
         delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color4");
 
         // Remove event listener for removing folders
         folderCont.removeEventListener("click", removeFolder);
+        folderCont.addEventListener("click", newPage);
     }
 }
 
@@ -94,7 +101,7 @@ function displayUserFolders(user_folders) {
     user_folders.forEach((folder, index) => {
         folderCont.insertAdjacentHTML("beforeend", 
             // <a href="notes.html?id=${folder.folder_url}" class="card-link" data-index="${index}">
-                `<section class="folder-card">
+                `<section class="folder-card" data-index=${index}>
                     <img src="open-folder.png" class="folder-icon" alt="folder icon">
                     <h4 class="folder-title">${folder.folder_name}</h4>
                     <p>Last edit: ${folder.last_edited}</p>

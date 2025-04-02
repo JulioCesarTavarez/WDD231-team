@@ -34,14 +34,20 @@ body {
 }
 
 /* ================== Main Body Styles ======================*/
-main {
+
+    
+.folder-cont {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw; /* Force it to use the full viewport width */
+    max-width: 100%; /* Ensure it doesn't shrink */
 }
+
 .folder-card {
     height: 50px;
-    width: 1200px;
+    width: 90%;
+    max-width: 90vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -150,7 +156,7 @@ a {
 
 /* ================== Tool bar Styles ======================*/
 .add-button {
-    position: absolute;
+    position: fixed;
     bottom: 25px;
     right: 125px;
     background-color: var(--color1);
@@ -168,7 +174,7 @@ a {
 }
 
 .delete-button {
-    position: absolute;
+    position: fixed;
     bottom: 25px;
     right: 25px;
     background-color: var(--color1);
