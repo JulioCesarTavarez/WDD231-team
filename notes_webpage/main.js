@@ -1,15 +1,9 @@
-import { folders } from './objects.js';
-
-import Dexie from 'dexie';
-
-// Initialize the database
+// initialize the database
 const db = new Dexie('NotesApp');
-
-// Define the schema
 db.version(1).stores({
-    folders: '++id, name, user',  // Auto-incrementing id, folder name
-    notes: '++id, folderId, content'  // Auto-incrementing id, references folderId, stores note content
+    folders: '++id, folder_name, folder_user, folder_url, last_edited', // I will modulize this code, if you want, feel free to add your notes table with is respective values. 
 });
+
 
 // Open the database
 db.open().catch(error => {
@@ -31,6 +25,7 @@ let user_name = "User"
 let user_folder_number = 2;
 let deleteMode = false;
 
+// This function sets the user_name modal to wait 1 second before appearing on the screen. 
 setTimeout(() => {
     userBox.style.opacity = "1";
     userBox.style.top = "50%";
@@ -41,7 +36,35 @@ function hideFolderForm(event) {
     add_form.style.opacity = "0";
     add_form.style.top = "-50%";
 }
+// This function takes user_folders and saves them into the indexed db
+async function saveFoldersToDB() {
+    try {
+        await db.folders.clear(); // Optional: Remove this line if updating folders individually.
+        await db.folders.bulkPut(user_folders); // Ensures updates instead of duplication
+        console.log("Folders saved to IndexedDB:", user_folders); // I have left the console.log here so that you can see how the data is organized.
+    } catch (error) {
+        console.error("Error saving folders:", error);
+    }
+}
+// This function retrives saved folders. 
+async function loadFoldersFromDB() {
+    try {
+        const storedFolders = await db.folders.toArray();
+        
+        // Filter folders belonging to the logged-in user
+        user_folders = storedFolders.filter(folder => folder.folder_user === user_name);
+        
+        displayUserFolders(user_folders);
+        console.log("Folders loaded from IndexedDB:", user_folders); // I have left the console.log here so that you can see how the data is organized.
+    } catch (error) {
+        console.error("Error loading folders:", error);
+    }
+}
 
+// Call this when the page loads
+document.addEventListener("DOMContentLoaded", loadFoldersFromDB);
+
+// This function saves new folders to the user_folders array before saving the new folder to the indexed db. 
 function saveFolderName(event) {
     event.preventDefault();
     const folder_input = document.querySelector("#folder_input").value;
@@ -54,6 +77,7 @@ function saveFolderName(event) {
         });
         user_folder_number++;
         displayUserFolders(user_folders);
+        saveFoldersToDB();
         hideFolderForm(event);
     }
     else {
@@ -61,6 +85,7 @@ function saveFolderName(event) {
     }
 }
 
+// This function creates the addFolder modal and creates event listeners to call the saveFolderName function
 function addFolder() {
     const add_folder = document.querySelector("#folder_add_button");
     const cancel_folder = document.querySelector("#folder_cancel_button");
@@ -70,6 +95,7 @@ function addFolder() {
     add_form.style.top = "50%";
 }
 
+// This function removes a targeted element and its object form the user_folders array. The DB is updated after this funciton is complete. 
 function removeFolder(event) {
     const folderElement = event.target.closest(".folder-card");
     if (!folderElement) return; // Ensure the target is a valid folder card element
@@ -85,9 +111,11 @@ function removeFolder(event) {
 
         // Re-render the list and ensure data-index updates correctly
         displayUserFolders(user_folders);
+        saveFoldersToDB();
     }
 }
 
+// This allows the user to enter into a mode allowing them to delete folders. Folders would just be clicked on. 
 function deleteFolderMode(event) {
     event.preventDefault();
     deleteMode = !deleteMode;
@@ -95,9 +123,10 @@ function deleteFolderMode(event) {
     if (deleteMode) {
         delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color3");
         delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color0");
-        
+
         // Add event listener for removing folders
         folderCont.addEventListener("click", removeFolder);
+        
     } else {
         delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color1");
         delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color4");
@@ -107,6 +136,16 @@ function deleteFolderMode(event) {
     }
 }
 
+// This little snippet of code designates when the folder cards perform an action. If clicked in delete folder mode, the clicked folder will be deleted. 
+// If The user clicks on a card while not in edit mode, the user is redirected to the notes page for that folder. 
+folderCont.addEventListener("click", (event) => {
+    if (deleteMode) {
+        return; // Prevent navigation when delete mode is active
+    }
+    newPage(user_folders, event);
+});
+
+// This function directs the user to a new page and sets the url parameters. 
 function newPage(user_folders, event) {
     const folderElement = event.target.closest(".folder-card");
     if (!folderElement) return; // Ensure the target is a valid folder card element
@@ -117,8 +156,9 @@ function newPage(user_folders, event) {
     console.log("newPage running")
 
     const sectionIndex = Number(section.getAttribute("data-index"));
+    console.log("Selected folder object:", user_folders[sectionIndex].folder_url);
 
-    window.location.href = `notes.html?id=${user_folders[sectionIndex].url}`;
+    window.location.href = `notes.html?id=${user_folders[sectionIndex].folder_url}`;
 }
 
 
@@ -134,38 +174,24 @@ function displayUserFolders(user_folders) {
                 <p>Last edit: ${folder.last_edited}</p>
             </section>`
         );
-
-        // Get the newly created folder-card element
-        const folderCard = folderCont.lastElementChild;
-
-        // Add the event listener to the folder-card element
-        folderCard.addEventListener("click", (event) => {
-            newPage(user_folders, event);
-        });
     });
 }
 
-function nameSubmit(event) {
+async function nameSubmit(event) {
     event.preventDefault();
 
-    user_name = user_input.value;
+    user_name = user_input.value.trim();
     if (user_name) {
         user_welcome.innerHTML = `Welcome, ${user_name}`;
         userBox.style.opacity = "0";
         userBox.style.top = "-50%";
+        add_button.style.bottom = "25px";
+        delete_button.style.bottom = "25px";
 
-        user_folders = folders.filter(folder => folder.folder_user.toLowerCase() === user_name.toLowerCase());
-
-        user_folders.sort((a, b) => new Date(b.last_edited) - new Date(a.last_edited));
-        
-        displayUserFolders(user_folders);
+        await loadFoldersFromDB(); // Load folders only after setting user_name
+    } else {
+        user_error.style.fontSize = "12px";
     }
-    else
-    {
-        user_error.style.fontSize = "12px"
-    }
-
-
 }
 
 user_button.addEventListener("click", nameSubmit);

@@ -157,7 +157,7 @@ a {
 /* ================== Tool bar Styles ======================*/
 .add-button {
     position: fixed;
-    bottom: 25px;
+    bottom: -200px;
     right: 125px;
     background-color: var(--color1);
     border: 2px solid var(--color0);
@@ -175,7 +175,7 @@ a {
 
 .delete-button {
     position: fixed;
-    bottom: 25px;
+    bottom: -200px;
     right: 25px;
     background-color: var(--color1);
     border: 2px solid var(--color0);
