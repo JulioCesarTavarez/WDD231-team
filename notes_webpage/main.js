@@ -1,5 +1,21 @@
 import { folders } from './objects.js';
 
+import Dexie from 'dexie';
+
+// Initialize the database
+const db = new Dexie('NotesApp');
+
+// Define the schema
+db.version(1).stores({
+    folders: '++id, name, user',  // Auto-incrementing id, folder name
+    notes: '++id, folderId, content'  // Auto-incrementing id, references folderId, stores note content
+});
+
+// Open the database
+db.open().catch(error => {
+    console.error("Failed to open DB:", error);
+});
+
 const user_input = document.querySelector("#user_input");
 const user_button = document.querySelector("#user_button");
 const user_welcome = document.querySelector("#user_welcome");
@@ -82,15 +98,27 @@ function deleteFolderMode(event) {
         
         // Add event listener for removing folders
         folderCont.addEventListener("click", removeFolder);
-        folderCont.removeEventListener("click", newPage);
     } else {
         delete_button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue("--color1");
         delete_button.style.color = getComputedStyle(document.documentElement).getPropertyValue("--color4");
 
         // Remove event listener for removing folders
         folderCont.removeEventListener("click", removeFolder);
-        folderCont.addEventListener("click", newPage);
     }
+}
+
+function newPage(user_folders, event) {
+    const folderElement = event.target.closest(".folder-card");
+    if (!folderElement) return; // Ensure the target is a valid folder card element
+
+    const section = folderElement.closest("section");
+    if (!section) return; // Ensure we're in the correct structure
+
+    console.log("newPage running")
+
+    const sectionIndex = Number(section.getAttribute("data-index"));
+
+    window.location.href = `notes.html?id=${user_folders[sectionIndex].url}`;
 }
 
 
@@ -99,15 +127,21 @@ function displayUserFolders(user_folders) {
     folderCont.innerHTML = ""; // Clear previous content
 
     user_folders.forEach((folder, index) => {
-        folderCont.insertAdjacentHTML("beforeend", 
-            // <a href="notes.html?id=${folder.folder_url}" class="card-link" data-index="${index}">
-                `<section class="folder-card" data-index=${index}>
-                    <img src="open-folder.png" class="folder-icon" alt="folder icon">
-                    <h4 class="folder-title">${folder.folder_name}</h4>
-                    <p>Last edit: ${folder.last_edited}</p>
-                </section>`
-            // </a>
+        folderCont.insertAdjacentHTML("beforeend",
+            `<section class="folder-card" data-index=${index}>
+                <img src="open-folder.png" class="folder-icon" alt="folder icon">
+                <h4 class="folder-title">${folder.folder_name}</h4>
+                <p>Last edit: ${folder.last_edited}</p>
+            </section>`
         );
+
+        // Get the newly created folder-card element
+        const folderCard = folderCont.lastElementChild;
+
+        // Add the event listener to the folder-card element
+        folderCard.addEventListener("click", (event) => {
+            newPage(user_folders, event);
+        });
     });
 }
 
@@ -137,8 +171,3 @@ function nameSubmit(event) {
 user_button.addEventListener("click", nameSubmit);
 add_button.addEventListener("click", addFolder);
 delete_button.addEventListener("click", deleteFolderMode);
-
-
-// const search = window.location.search;
-// const params = new URLSearchParams(search);
-// const productId = params.get("id");
