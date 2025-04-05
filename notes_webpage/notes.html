@@ -21,21 +21,32 @@
     </header>
 
     <main>
-        <div class="stickyNote">
-            <h2 class="stickyTitle">Note title 1</h2>
-            <p class="stickyText">Lorem ipsum dolor</p>
-            <button id="readMore1" class="readMore1">Open Ntes</button>
-        </div>
+
+        <form id="noteCreationForm" class="noteCreationForm hideNote">
+            <div id="closeContainer" class="closeContainer">
+                <button id="cancelCreation" class="cancelCreation">X</button> 
+            </div>
+            <div class="noteTitle">
+                <label for="note_title">Note Title:</label> 
+                <input type="text" id="note_title" class="noteTitle" name="note_title">
+            </div>
+            <div class="noteTextContainer">
+                <label for="note_text">Note Text</label>
+                <textarea type="text" id="note_text" class="noteText" name="note_text"></textarea>
+            </div>
+
+            <button id="addNote">Add note</button>
+        </form>
 
     </main>
     <footer>
         <div>
             <button id="add-button" class="add-button">
                 +
-            </section>
+            </button>
             <button class="delete-button">
                 X
-            </section>
+            </button>
         </div>
         <!-- <a href="https://www.flaticon.com/free-icons/sunset" title="sunset icons">Sunset icons created by Ciamis Interior design - Flaticon</a> -->
     </footer>
