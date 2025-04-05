@@ -1,11 +1,15 @@
-let noteCount = 1;
-let editingNote = null;
+let noteCount = 1; // this will keep track of all teh sticky note made
+let editingNote = null; // if editing note is true we can edit notes
+let deleteMode = false;//this is to see if we can delete the note when true
 
 const addNoteButton = document.querySelector("#add-button");
 addNoteButton.addEventListener("click", toggleNoteForm);
 
 const closeButton = document.querySelector("#cancelCreation");
-closeButton.addEventListener("click", toggleNoteForm);
+closeButton.addEventListener("click", (event) =>{
+    event.preventDefault(); 
+    toggleNoteForm();
+});
 
 function toggleNoteForm() {
     const noteCreator = document.querySelector(".noteCreationForm");
@@ -47,11 +51,24 @@ function makeNote(event) {
         const button = document.createElement("button");
         button.textContent = "Read More";
         button.id = `readMore${noteCount}`;
-        button.addEventListener("click", () => editExistingNote(div));
+        button.addEventListener("click", (event) => {
+            event.stopPropagation(); 
+            if (!deleteMode) {
+                editExistingNote(div);
+            }
+        });
 
         div.appendChild(h2);
         div.appendChild(p);
         div.appendChild(button);
+
+        div.addEventListener("click", (event) => {
+            if (deleteMode) {
+                event.stopPropagation();
+                div.remove();
+                exitDeleteMode();
+            }
+        });
 
         document.querySelector("main").appendChild(div);
         noteCount++;
@@ -73,4 +90,22 @@ function editExistingNote(noteDiv) {
     document.querySelector(".noteCreationForm").classList.remove("hideNote");
 
     editingNote = noteDiv;
+}
+
+const remove = document.getElementById("delete-button");
+remove.addEventListener("click", () => {
+    deleteMode = true;
+    document.body.classList.add("delete-cursor");
+    document.querySelectorAll(".stickyNote").forEach(note => {
+        note.classList.add("delete-mode");
+    });
+    alert("Delete mode ON: Click a note to remove it.");
+});
+
+function exitDeleteMode() {
+    deleteMode = false;
+    document.body.classList.remove("delete-cursor");
+    document.querySelectorAll(".stickyNote").forEach(note => {
+        note.classList.remove("delete-mode");
+    });
 }
