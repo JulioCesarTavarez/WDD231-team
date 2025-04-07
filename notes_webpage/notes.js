@@ -1,24 +1,31 @@
+import { getDB } from "./main.js";
+
+const database = await getDB();
+
+
 let noteCount = 1; // this will keep track of all teh sticky note made
 let editingNote = null; // if editing note is true we can edit notes
 let deleteMode = false;//this is to see if we can delete the note when true
 
 const addNoteButton = document.querySelector("#add-button");
 addNoteButton.addEventListener("click", toggleNoteForm);
-
+//This function iscalled if the x butto is hit on teh form. so it hides theform and doesnt reset teh page.
 const closeButton = document.querySelector("#cancelCreation");
 closeButton.addEventListener("click", (event) =>{
     event.preventDefault(); 
     toggleNoteForm();
 });
 
+// This is going to hide or not hide the form depending on if the plus button is made.
 function toggleNoteForm() {
     const noteCreator = document.querySelector(".noteCreationForm");
     noteCreator.classList.toggle("hideNote");
 }
 
+
+//This function is called when the submit button is hit on the form to make a new note.
 const noteMaker = document.getElementById("addNote");
 noteMaker.addEventListener("click", makeNote);
-
 function makeNote(event) {
     event.preventDefault();
 
@@ -70,6 +77,8 @@ function makeNote(event) {
             }
         });
 
+        saveNoteToFolder(noteTitle.value, noteText.value);
+
         document.querySelector("main").appendChild(div);
         noteCount++;
     }
@@ -79,6 +88,27 @@ function makeNote(event) {
     noteText.value = "";
     document.querySelector(".noteCreationForm").classList.add("hideNote");
 }
+
+
+//This is going ot save the note to a specified folder
+async function saveNoteToFolder(noteTitle, noteText) {
+    if (!folderURL) {
+        console.error("No folder URL found in query parameters.");
+        return;
+    }
+
+    try {
+        await db.notes.add({
+            folder_url: folderURL,
+            note_title: noteTitle,
+            note_text: noteText
+        });
+        console.log("Note saved to folder:", folderURL);
+    } catch (error) {
+        console.error("Error saving note:", error);
+    }
+}
+
 
 function editExistingNote(noteDiv) {
     const h2 = noteDiv.querySelector("h2");
@@ -92,15 +122,15 @@ function editExistingNote(noteDiv) {
     editingNote = noteDiv;
 }
 
-const remove = document.getElementById("delete-button");
-remove.addEventListener("click", () => {
-    deleteMode = true;
-    document.body.classList.add("delete-cursor");
-    document.querySelectorAll(".stickyNote").forEach(note => {
-        note.classList.add("delete-mode");
-    });
-    alert("Delete mode ON: Click a note to remove it.");
-});
+// const remove = document.getElementById("delete-button");
+// remove.addEventListener("click", () => {
+//     deleteMode = true;
+//     document.body.classList.add("delete-cursor");
+//     document.querySelectorAll(".stickyNote").forEach(note => {
+//         note.classList.add("delete-mode");
+//     });
+//     alert("Delete mode ON: Click a note to remove it.");
+// });
 
 function exitDeleteMode() {
     deleteMode = false;

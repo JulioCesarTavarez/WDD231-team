@@ -2,13 +2,20 @@
 const db = new Dexie('NotesApp');
 db.version(1).stores({
     folders: '++id, folder_name, folder_user, folder_url, last_edited', // I will modulize this code, if you want, feel free to add your notes table with is respective values. 
+    notes: '++id, folder_url, note_title, note_text'
 });
+
+export async function getDB() {
+    return db;
+}
+
 
 
 // Open the database
 db.open().catch(error => {
     console.error("Failed to open DB:", error);
 });
+
 
 const user_input = document.querySelector("#user_input");
 const user_button = document.querySelector("#user_button");
@@ -24,6 +31,12 @@ let user_folders = []
 let user_name = "User"
 let user_folder_number = 2;
 let deleteMode = false;
+
+
+
+
+
+
 
 // This function sets the user_name modal to wait 1 second before appearing on the screen. 
 setTimeout(() => {
