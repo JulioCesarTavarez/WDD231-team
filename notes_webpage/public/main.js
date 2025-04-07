@@ -1,3 +1,10 @@
+const response = await fetch('/api/quote');
+const quote = await response.json();
+
+console.log(quote[0].q); // quote text
+console.log(quote[0].a); // author
+quoteDisplay(quote);
+
 // initialize the database
 const db = new Dexie('NotesApp');
 db.version(1).stores({
@@ -25,12 +32,7 @@ let user_name = "User"
 let user_folder_number = 2;
 let deleteMode = false;
 
-const response = await fetch('/api/quote');
-const quote = await response.json();
 
-console.log(quote[0].q); // quote text
-console.log(quote[0].a); // author
-quoteDisplay(quote)
 
 // This function sets the user_name modal to wait 1 second before appearing on the screen. 
 setTimeout(() => {
