@@ -92,7 +92,7 @@ function editExistingNote(noteDiv) {
     editingNote = noteDiv;
 }
 
-const remove = document.getElementById("delete-button");
+const remove = document.querySelector(".delete-button");
 remove.addEventListener("click", () => {
     deleteMode = true;
     document.body.classList.add("delete-cursor");
