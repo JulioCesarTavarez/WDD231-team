@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Notes</title>
+    <link rel="stylesheet" href="/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js" defer></script>
+    <script type="module" src="/main.js" defer></script>
+</head>
+<body>
+    <section class="user_box">
+        <form id="user_form">
+            <h1>Welcome!</h1>
+            <p class="user_error">No name was inserted, please try again.</p>
+            <label for="user_input">Enter your name: </label>
+            <input id="user_input" name="user_input" type="text">
+            <p>
+                <button id="user_button">Submit</button>
+            </p>
+            <p class="quotation"></p>
+            <p class="quote-author"></p>
+        </form>
+    </section>
+    <section class="new_folder">
+        <form id="new_folder_form">
+            <h1>Add new:</h1>
+            <p class="folder_error">No text was inserted, please try again.</p>
+            <label for="folder_input">New folder name: </label>
+            <input id="folder_input" name="folder_input" type="text">
+            <p>
+                <button id="folder_cancel_button">Cancel</button>
+                <button id="folder_add_button">Add</button>
+            </p>
+        </form>
+    </section>
+    <section class="add-button">
+        +
+    </section>
+    <section class="delete-button">
+        X
+    </section>
+    <header>
+        <div>
+            <h2>Cool Notes</h1>
+        </div>
+        <div>
+            <h3 id="user_welcome">Welcome</h3>
+        </div>
+        <div>
+            <p>&copy 2025</p>
+        </div>
+    </header>
+    <main>
+        <div class="under-header"></div>
+        <div class="folder-cont">
+        </div>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>
+<!-- <a href="https://www.flaticon.com/free-icons/open-folder" title="open folder icons">Open folder icons created by kmg design - Flaticon</a> --> 
