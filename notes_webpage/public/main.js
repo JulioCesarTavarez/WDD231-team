@@ -41,10 +41,6 @@ let deleteMode = false;
 
 
 
-
-
-
-
 // This function sets the user_name modal to wait 1 second before appearing on the screen. 
 setTimeout(() => {
     userBox.style.opacity = "1";

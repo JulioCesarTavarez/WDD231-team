@@ -122,15 +122,15 @@ function editExistingNote(noteDiv) {
     editingNote = noteDiv;
 }
 
-// const remove = document.getElementById("delete-button");
-// remove.addEventListener("click", () => {
-//     deleteMode = true;
-//     document.body.classList.add("delete-cursor");
-//     document.querySelectorAll(".stickyNote").forEach(note => {
-//         note.classList.add("delete-mode");
-//     });
-//     alert("Delete mode ON: Click a note to remove it.");
-// });
+const remove = document.querySelector(".delete-button");
+remove.addEventListener("click", () => {
+    deleteMode = true;
+    document.body.classList.add("delete-cursor");
+    document.querySelectorAll(".stickyNote").forEach(note => {
+        note.classList.add("delete-mode");
+    });
+    alert("Delete mode ON: Click a note to remove it.");
+});
 
 function exitDeleteMode() {
     deleteMode = false;
