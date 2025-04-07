@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "wdd231-team",
+  "version": "1.0.0",
+  "description": "This is to make a Notes cite to keep track of Notes.\r ## Visual map",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulioCesarTavarez/WDD231-team.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulioCesarTavarez/WDD231-team/issues"
+  },
+  "homepage": "https://github.com/JulioCesarTavarez/WDD231-team#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}
