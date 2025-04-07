@@ -3,7 +3,7 @@ const quote = await response.json();
 
 console.log(quote[0].q); // quote text
 console.log(quote[0].a); // author
-quoteDisplay(quote)
+quoteDisplay(quote);
 
 // initialize the database
 const db = new Dexie('NotesApp');
