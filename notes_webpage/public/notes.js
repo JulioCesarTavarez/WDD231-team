@@ -1,6 +1,10 @@
-import { getDB } from "./main.js";
+import { getDB } from "./db.js";
 
 const database = await getDB();
+
+const db = database;
+const urlParams = new URLSearchParams(window.location.search);
+const folderURL = urlParams.get("folder");
 
 
 let noteCount = 1; // this will keep track of all teh sticky note made
