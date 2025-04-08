@@ -3,9 +3,25 @@ const db = getDB();
 
 const urlParams = new URLSearchParams(window.location.search);
 const folderURL = urlParams.get("folder");
+let quote = [
+    {
+        q: "Patience is a virtue",
+        a: "Someone"
+    }
+];
 
-const response = await fetch('/api/quote');
-const quote = await response.json();
+try {
+    const response = await fetch('/api/quote');
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    quote = await response.json();
+    console.log("Quote received:", quote);
+} catch (error) {
+    console.error("Failed to fetch quote:", error);
+}
 
 
 
