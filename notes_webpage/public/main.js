@@ -1,8 +1,6 @@
 import { getDB } from "./db.js";
+const db = getDB();
 
-const database = await getDB();
-
-const db = database;
 const urlParams = new URLSearchParams(window.location.search);
 const folderURL = urlParams.get("folder");
 

@@ -1,10 +1,8 @@
 import { getDB } from "./db.js";
+const db = getDB();
 
-const database = await getDB();
-
-const db = database;
 const urlParams = new URLSearchParams(window.location.search);
-const folderURL = urlParams.get("folder");
+const folderURL = urlParams.get("id");
 
 
 let noteCount = 1; // this will keep track of all teh sticky note made
@@ -143,3 +141,58 @@ function exitDeleteMode() {
         note.classList.remove("delete-mode");
     });
 }
+
+async function loadNotes() {
+    if (!folderURL) {
+        console.error("No folder URL found in query parameters.");
+        return;
+    }
+
+    try {
+        const notes = await (await db).notes.where("folder_url").equals(folderURL).toArray();
+
+        notes.forEach(note => {
+            const div = document.createElement("div");
+            div.classList.add("stickyNote");
+            div.id = `stickyNote${noteCount}`;
+
+            const h2 = document.createElement("h2");
+            h2.classList.add("stickyTitle");
+            h2.textContent = note.note_title;
+
+            const p = document.createElement("p");
+            p.classList.add("stickyText");
+            p.textContent = note.note_text;
+
+            const button = document.createElement("button");
+            button.textContent = "Read More";
+            button.id = `readMore${noteCount}`;
+            button.addEventListener("click", (event) => {
+                event.stopPropagation(); 
+                if (!deleteMode) {
+                    editExistingNote(div);
+                }
+            });
+
+            div.appendChild(h2);
+            div.appendChild(p);
+            div.appendChild(button);
+
+            div.addEventListener("click", (event) => {
+                if (deleteMode) {
+                    event.stopPropagation();
+                    div.remove();
+                    exitDeleteMode();
+                }
+            });
+
+            document.querySelector("main").appendChild(div);
+            noteCount++;
+        });
+
+    } catch (error) {
+        console.error("Failed to load notes:", error);
+    }
+}
+
+loadNotes()
